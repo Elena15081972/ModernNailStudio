@@ -9,9 +9,10 @@ async function main() {
   const browser = await chromium.launch({ headless: false });
   const context = await browser.newContext();
   const page = await context.newPage();
-  await page.goto(config.loginUrl);
+  await page.goto(config.loginUrl, { waitUntil: "domcontentloaded", timeout: 60000 });
 
-  console.log("Waiting for the dashboard to load after you log in...");
+  console.log("Браузер открыт — войдите в аккаунт вручную.");
+  console.log("Жду появления панели после входа (без ограничения по времени)...");
   await page.waitForSelector(SELECTORS.login.loggedInMarker, { timeout: 0 });
 
   await context.storageState({ path: config.storageStatePath });
@@ -22,6 +23,6 @@ async function main() {
 }
 
 main().catch((err) => {
-  console.error(err);
-  process.exit(1);
+  console.error("Что-то пошло не так:", err instanceof Error ? err.message : err);
+  console.error("Окно браузера оставлено открытым для проверки. Закройте его вручную и повторите npm run login:dev.");
 });
