@@ -6,7 +6,9 @@ import type { Service } from "./types.js";
 export async function listServices(): Promise<Service[]> {
   const page = await newPage();
   try {
-    await page.goto(new URL(SELECTORS.services.pageUrl, config.baseUrl).toString());
+    const url = new URL(SELECTORS.services.pageUrl, config.baseUrl);
+    if (config.companyId) url.searchParams.set("company", config.companyId);
+    await page.goto(url.toString(), { waitUntil: "domcontentloaded" });
     await page.waitForSelector(SELECTORS.services.row);
 
     return await page.$$eval(

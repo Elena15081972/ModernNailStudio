@@ -12,12 +12,13 @@ export const SELECTORS = {
     loggedInMarker: '[data-testid="main-nav"], nav',
   },
   services: {
-    pageUrl: "/settings/services",
-    row: ".services-list__item, tr.service-row",
-    name: ".service-name",
+    pageUrl: "/ru/owner/services/",
+    row: "table.company-services-table tbody > tr[id]",
+    name: "td.value a",
+    // DIKIDI doesn't expose a category per row in this table (only as a filter dropdown) — no matching selector.
     category: ".service-category",
-    price: ".service-price",
-    durationMinutes: ".service-duration",
+    price: "td.prices",
+    durationMinutes: "td.duration",
   },
   staff: {
     pageUrl: "/settings/employees",

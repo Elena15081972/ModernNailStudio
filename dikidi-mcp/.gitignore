@@ -3,3 +3,5 @@ dist/
 .env
 .dikidi-session.json
 *.log
+scripts/*.html
+scripts/*.png
