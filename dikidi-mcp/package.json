@@ -1,0 +1,28 @@
+{
+  "name": "dikidi-mcp",
+  "version": "0.1.0",
+  "description": "MCP server for DIKIDI Business (browser automation, no official API key required)",
+  "type": "module",
+  "private": true,
+  "bin": {
+    "dikidi-mcp": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc -p .",
+    "start": "node dist/index.js",
+    "dev": "tsx src/index.ts",
+    "login": "node dist/scripts/capture-session.js",
+    "login:dev": "tsx src/scripts/capture-session.ts"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "dotenv": "^16.4.5",
+    "playwright": "^1.48.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0"
+  }
+}
