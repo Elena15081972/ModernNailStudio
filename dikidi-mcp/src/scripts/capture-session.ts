@@ -1,6 +1,8 @@
 import { chromium } from "playwright";
 import { config } from "../config.js";
-import { SELECTORS } from "../dikidi/selectors.js";
+
+// Paths that only exist once you're logged into DIKIDI Business.
+const LOGGED_IN_PATH = /\/(business\/projects|owner\/)/;
 
 async function main() {
   console.log("Opening a browser window. Log into DIKIDI Business manually — take your time, solve any captcha/2FA.");
@@ -12,8 +14,8 @@ async function main() {
   await page.goto(config.loginUrl, { waitUntil: "domcontentloaded", timeout: 60000 });
 
   console.log("Браузер открыт — войдите в аккаунт вручную.");
-  console.log("Жду появления панели после входа (без ограничения по времени)...");
-  await page.waitForSelector(SELECTORS.login.loggedInMarker, { timeout: 0 });
+  console.log("Жду, пока адрес страницы сменится после входа (без ограничения по времени)...");
+  await page.waitForURL((url) => LOGGED_IN_PATH.test(url.pathname), { timeout: 0 });
 
   await context.storageState({ path: config.storageStatePath });
   console.log(`Session saved to ${config.storageStatePath}. You can close the browser window now.`);
