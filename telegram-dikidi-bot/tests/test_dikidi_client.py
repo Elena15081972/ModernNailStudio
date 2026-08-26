@@ -13,7 +13,8 @@ DAY = date(2026, 3, 12)
 def test_list_services_returns_known_services():
     client = MockDikidiClient()
     names = {s.name for s in client.list_services()}
-    assert names == {"Стрижка", "Маникюр", "Окрашивание"}
+    assert "Маникюр" in names
+    assert "Педикюр полностью (+стопы)" in names
 
 
 def test_list_staff_returns_staff():

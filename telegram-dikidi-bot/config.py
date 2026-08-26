@@ -33,6 +33,10 @@ class Config:
 
     storage_path: str = os.getenv("BOT_STORAGE_PATH", "./bot_storage.sqlite3")
 
+    # Для свободных ответов (приветствие, цена, возражения) через LLM, см. llm.py.
+    openai_api_key: str = os.getenv("OPENAI_API_KEY", "")
+    openai_model: str = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
+
     def validate_live(self) -> None:
         if self.dikidi_mode != "live":
             return

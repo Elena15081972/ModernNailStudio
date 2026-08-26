@@ -37,6 +37,7 @@ from telegram.ext import (
     filters,
 )
 
+import llm
 import nlp
 from config import config
 from dikidi_client import DikidiAPIError, build_client
@@ -86,9 +87,8 @@ def _confirm_keyboard() -> InlineKeyboardMarkup:
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await update.message.reply_text(
-        "Здравствуйте! Напишите, на какую услугу и день хотите записаться, например:\n"
-        "«Запиши меня на завтра на стрижку в 14:00, Елена».\n\n"
-        "Я покажу свободные окошки кнопками — останется только выбрать удобное время."
+        "Здравствуйте! 💅 Мы — ногтевая студия: маникюр, педикюр, наращивание.\n\n"
+        "Напишите, на какую услугу и день хотите записаться."
     )
 
 
@@ -104,10 +104,8 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     parsed = nlp.parse_booking_request(text)
 
     if parsed.day is None:
-        await update.message.reply_text(
-            "Не поняла дату записи. Уточните, пожалуйста, день — например «завтра», "
-            "«в пятницу» или «27.08»."
-        )
+        reply = llm.draft_reply(text)
+        await update.message.reply_text(reply)
         return ConversationHandler.END
 
     client_name = parsed.client_name or update.effective_user.first_name or "Клиент"

@@ -187,13 +187,21 @@ class MockDikidiClient(DikidiClient):
 
     def __init__(self) -> None:
         self._services = [
-            Service(id=1, name="Стрижка", duration_min=60, price=2500),
-            Service(id=2, name="Маникюр", duration_min=90, price=3000),
-            Service(id=3, name="Окрашивание", duration_min=150, price=6500),
+            Service(id=1, name="Маникюр", duration_min=30, price=900),
+            Service(id=2, name="Маникюр с покрытием лаком", duration_min=60, price=1000),
+            Service(id=3, name="Маникюр с покрытием гель-лак", duration_min=60, price=1900),
+            Service(id=4, name="Маникюр мужской", duration_min=30, price=1000),
+            Service(id=5, name="Снятие гель-лака", duration_min=15, price=300),
+            Service(id=6, name="Наращивание ногтей", duration_min=90, price=2500),
+            Service(id=7, name="Педикюр + обычный лак", duration_min=95, price=1600),
+            Service(id=8, name="Педикюр полностью (+стопы)", duration_min=120, price=1900),
+            Service(id=9, name="Педикюр (пальчики) + гель-лак", duration_min=60, price=1700),
+            Service(id=10, name="Педикюр + гель-лак", duration_min=75, price=2400),
+            Service(id=11, name="Маникюр + педикюр с гель-лаком", duration_min=120, price=3700),
         ]
         self._staff = [
-            Staff(id=101, name="Елена"),
-            Staff(id=102, name="Ирина"),
+            Staff(id=101, name="Евгения"),
+            Staff(id=102, name="Гуля"),
         ]
         self._booked: set[tuple[date, str, int]] = set()
         self._clients: dict[str, int] = {}
@@ -241,7 +249,7 @@ class MockDikidiClient(DikidiClient):
             staff_id,
             client_id,
         )
-        return f"[МОК] Запись создана на {day.strftime('%d.%m.%Y')} в {time}."
+        return f"Запись создана на {day.strftime('%d.%m.%Y')} в {time}."
 
 
 def build_client(cfg) -> DikidiClient:
